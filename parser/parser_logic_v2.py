@@ -14,7 +14,7 @@ def get_sizes_left(card_response: WBCardData) -> list[SizeLeft]:
 
 
 def get_product_price(card_response: WBCardData) -> float:
-    return card_response.products[0].sale_price
+    return card_response.products[0].sale_price_float
 
 
 def get_product_brand(card_response: WBCardData) -> str:
@@ -48,6 +48,21 @@ def make_full_info_message(card_response: WBCardData) -> str:
     brand, name = get_product_brand(card_response), get_product_name(card_response)
     size_message = make_tg_message_about_sizes(card_response)
     articul = get_product_articul(card_response)
+    message = (f"_{brand}_: {name}\n"
+               f"Article: _{articul}_\n"
+               f"Price: *{price} BYN*\n"
+               f"{size_message}")
+    return message
+
+
+def make_full_info_message_v2(card_response: WBCardData) -> str:
+    response_data = card_response.products[0].model_dump()
+    brand = response_data['brand']
+    name = response_data['name']
+    articul = response_data['id']
+    price = response_data['sale_price']
+    size_message = make_tg_message_about_sizes(card_response)
+
     message = (f"_{brand}_: {name}\n"
                f"Article: _{articul}_\n"
                f"Price: *{price} BYN*\n"

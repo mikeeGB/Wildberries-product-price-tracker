@@ -1,7 +1,7 @@
 from typing import Literal
 from collections import namedtuple
 
-from pydantic import BaseModel, field_validator, Field
+from pydantic import BaseModel, Field, field_serializer
 
 
 class Color(BaseModel):
@@ -39,9 +39,13 @@ class Product(BaseModel):
             for size in self.sizes if size.stocks
         ]
 
-    @field_validator('sale_price')
+    @property
+    def sale_price_float(self) -> float:
+        return round(self.sale_price / 100, 2)
+
+    @field_serializer('sale_price')
     @classmethod
-    def price_validate(cls, v):
+    def price_serialized(cls, v):
         return round(v / 100, 2)
 
 
