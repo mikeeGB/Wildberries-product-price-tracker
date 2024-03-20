@@ -14,7 +14,7 @@ def get_sizes_left(card_response: WBCardData) -> list[SizeLeft]:
 
 
 def get_product_price(card_response: WBCardData) -> float:
-    return card_response.products[0].salePriceU / 100
+    return card_response.products[0].sale_price
 
 
 def get_product_brand(card_response: WBCardData) -> str:
@@ -50,6 +50,6 @@ def make_full_info_message(card_response: WBCardData) -> str:
     articul = get_product_articul(card_response)
     message = (f"_{brand}_: {name}\n"
                f"Article: _{articul}_\n"
-               f"Price: *{price:.2f} BYN*\n"
+               f"Price: *{price} BYN*\n"
                f"{size_message}")
     return message
