@@ -2,7 +2,7 @@ import requests
 import time
 
 from config import config, url_patterns
-from parser.parser_logic_v2 import parse_product_card_by_code, get_product_price, make_full_info_message
+from parser.parser_logic_v2 import parse_product_card_by_code, get_product_price, make_full_info_message_v2
 
 
 def send_tg_message(chat_id: int, message: str):
@@ -23,7 +23,7 @@ def start_trench_price_monitor(wb_articul: int, price_to_track: float, re_check_
         time.sleep(re_check_time)
         wb_card = parse_product_card_by_code(wb_articul)
         price = get_product_price(card_response=wb_card)
-        full_info = make_full_info_message(card_response=wb_card)
+        full_info = make_full_info_message_v2(card_response=wb_card)
 
         if price <= price_to_track:
             make_tg_call_via_callmebot(username=config.TG_USERNAME, msg_text=f"Скидка! Цена: {price}")
