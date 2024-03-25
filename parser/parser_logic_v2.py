@@ -66,6 +66,6 @@ def make_full_info_message_v2(card_response: Product) -> str:
 
     message = (f"_{brand}_: {name}\n"
                f"Article: _{articul}_\n"
-               f"Price: *{price} BYN*\n"
+               f"Price: *{price:.2f} BYN*\n"
                f"{size_message}")
     return message
